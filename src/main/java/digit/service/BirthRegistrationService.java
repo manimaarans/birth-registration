@@ -8,6 +8,7 @@ import digit.validator.BirthApplicationValidator;
 import digit.web.models.BirthApplicationSearchCriteria;
 import digit.web.models.BirthRegistrationApplication;
 import digit.web.models.BirthRegistrationRequest;
+import digit.web.models.Workflow;
 import lombok.extern.slf4j.Slf4j;
 import org.egov.common.contract.request.RequestInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,6 +73,10 @@ public class BirthRegistrationService {
         applications.forEach(application -> {
             enrichmentUtil.enrichFatherApplicantOnSearch(application);
             enrichmentUtil.enrichMotherApplicantOnSearch(application);
+        });
+        //WORKFLOW INTEGRATION
+        applications.forEach(application -> {
+            application.setWorkflow(Workflow.builder().status(workflowService.getCurrentWorkflow(requestInfo, application.getTenantId(), application.getApplicationNumber()).getState().getState()).build());
         });
 
         // Otherwise return the found applications

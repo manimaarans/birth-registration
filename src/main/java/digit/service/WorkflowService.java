@@ -88,7 +88,7 @@ public class WorkflowService {
 
         RequestInfoWrapper requestInfoWrapper = RequestInfoWrapper.builder().requestInfo(requestInfo).build();
 
-        StringBuilder url = getSearchURLWithParams(tenantId, businessId);
+        StringBuilder url = getSearchURLWithParams(tenantId, businessId, true);
 
         Object res = repository.fetchResult(url, requestInfoWrapper);
         ProcessInstanceResponse response = null;
@@ -108,7 +108,7 @@ public class WorkflowService {
 
     private BusinessService getBusinessService(BirthRegistrationApplication application, RequestInfo requestInfo) {
         String tenantId = application.getTenantId();
-        StringBuilder url = getSearchURLWithParams(tenantId, "BTR");
+        StringBuilder url = getSearchURLWithParams(tenantId, "BTR", false);
         RequestInfoWrapper requestInfoWrapper = RequestInfoWrapper.builder().requestInfo(requestInfo).build();
         Object result = repository.fetchResult(url, requestInfoWrapper);
         BusinessServiceResponse response = null;
@@ -124,13 +124,17 @@ public class WorkflowService {
         return response.getBusinessServices().get(0);
     }
 
-    private StringBuilder getSearchURLWithParams(String tenantId, String businessService) {
+    private StringBuilder getSearchURLWithParams(String tenantId, String businessService, boolean isProcess) {
 
         StringBuilder url = new StringBuilder(config.getWfHost());
-        url.append(config.getWfBusinessServiceSearchPath());
+        url.append(isProcess? config.getWfProcessInstanceSearchPath() : config.getWfBusinessServiceSearchPath());
         url.append("?tenantId=");
         url.append(tenantId);
-        url.append("&businessServices=");
+        if(isProcess) {
+            url.append("&businessIds=");
+        } else {
+            url.append("&businessServices=");
+        }
         url.append(businessService);
         return url;
     }
