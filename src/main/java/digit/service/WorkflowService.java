@@ -41,7 +41,7 @@ public class WorkflowService {
 
     public void updateWorkflowStatus(BirthRegistrationRequest birthRegistrationRequest) {
         birthRegistrationRequest.getBirthRegistrationApplications().forEach(application -> {
-            ProcessInstance processInstance = getProcessInstanceForDTR(application, birthRegistrationRequest.getRequestInfo());
+            ProcessInstance processInstance = getProcessInstanceForBTR(application, birthRegistrationRequest.getRequestInfo());
             ProcessInstanceRequest workflowRequest = new ProcessInstanceRequest(birthRegistrationRequest.getRequestInfo(), Collections.singletonList(processInstance));
             callWorkFlow(workflowRequest);
         });
@@ -56,13 +56,13 @@ public class WorkflowService {
         return response.getProcessInstances().get(0).getState();
     }
 
-    private ProcessInstance getProcessInstanceForDTR(BirthRegistrationApplication application, RequestInfo requestInfo) {
+    private ProcessInstance getProcessInstanceForBTR(BirthRegistrationApplication application, RequestInfo requestInfo) {
         Workflow workflow = application.getWorkflow();
 
         ProcessInstance processInstance = new ProcessInstance();
         processInstance.setBusinessId(application.getApplicationNumber());
         processInstance.setAction(workflow.getAction());
-        processInstance.setModuleName("death-services");
+        processInstance.setModuleName("birth-services");
         processInstance.setTenantId(application.getTenantId());
         processInstance.setBusinessService("BTR");
         processInstance.setDocuments(workflow.getDocuments());
@@ -108,7 +108,7 @@ public class WorkflowService {
 
     private BusinessService getBusinessService(BirthRegistrationApplication application, RequestInfo requestInfo) {
         String tenantId = application.getTenantId();
-        StringBuilder url = getSearchURLWithParams(tenantId, "DTR");
+        StringBuilder url = getSearchURLWithParams(tenantId, "BTR");
         RequestInfoWrapper requestInfoWrapper = RequestInfoWrapper.builder().requestInfo(requestInfo).build();
         Object result = repository.fetchResult(url, requestInfoWrapper);
         BusinessServiceResponse response = null;
@@ -119,7 +119,7 @@ public class WorkflowService {
         }
 
         if (CollectionUtils.isEmpty(response.getBusinessServices()))
-            throw new CustomException("BUSINESSSERVICE_NOT_FOUND", "The businessService " + "DTR" + " is not found");
+            throw new CustomException("BUSINESSSERVICE_NOT_FOUND", "The businessService " + "BTR" + " is not found");
 
         return response.getBusinessServices().get(0);
     }
@@ -135,7 +135,7 @@ public class WorkflowService {
         return url;
     }
 
-    public ProcessInstanceRequest getProcessInstanceForDeathRegistrationPayment(BirthRegistrationRequest updateRequest) {
+    public ProcessInstanceRequest getProcessInstanceForBirthRegistrationPayment(BirthRegistrationRequest updateRequest) {
 
         BirthRegistrationApplication application = updateRequest.getBirthRegistrationApplications().get(0);
 
