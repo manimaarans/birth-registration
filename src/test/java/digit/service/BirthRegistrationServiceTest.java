@@ -7,6 +7,8 @@ import digit.validator.BirthApplicationValidator;
 import digit.web.models.BirthApplicationSearchCriteria;
 import digit.web.models.BirthRegistrationApplication;
 import digit.web.models.BirthRegistrationRequest;
+import digit.web.models.ProcessInstance;
+import digit.web.models.State;
 import org.egov.common.contract.request.RequestInfo;
 import org.junit.Test;
 import org.junit.jupiter.api.Tag;
@@ -67,10 +69,12 @@ public class BirthRegistrationServiceTest {
     public void shouldSearchBTRApplications() {
         BirthRegistrationApplication birthRegistrationApplication = new BirthRegistrationApplication();
         when(birthRegistrationRepository.getApplications(any())).thenReturn(Collections.singletonList(birthRegistrationApplication));
+        when(workflowService.getCurrentWorkflow(any(), any(), any())).thenReturn(ProcessInstance.builder().state(State.builder().state("test").build()).build());
         birthRegistrationService.searchBtApplications(new RequestInfo(), new BirthApplicationSearchCriteria());
         verify(birthRegistrationRepository, times(1)).getApplications(any(BirthApplicationSearchCriteria.class));
         verify(enrichmentUtil, times(1)).enrichFatherApplicantOnSearch(any(BirthRegistrationApplication.class));
         verify(enrichmentUtil, times(1)).enrichMotherApplicantOnSearch(any(BirthRegistrationApplication.class));
+        verify(workflowService, times(1)).getCurrentWorkflow(any(RequestInfo.class), any(), any());
 
     }
     @Test
