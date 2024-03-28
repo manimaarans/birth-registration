@@ -20,30 +20,30 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @ToString
-@EqualsAndHashCode(of = {"tenantId","currentState","action"})
+@EqualsAndHashCode(of = {"tenantId", "currentState", "action"})
 public class Action {
 
-    @Size(max=256)
+    @Size(max = 256)
     @JsonProperty("uuid")
     private String uuid;
 
-    @Size(max=256)
+    @Size(max = 256)
     @JsonProperty("tenantId")
     private String tenantId;
 
-    @Size(max=256)
+    @Size(max = 256)
     @JsonProperty("currentState")
     private String currentState;
 
-    @Size(max=256)
+    @Size(max = 256)
     @JsonProperty("action")
     private String action;
 
-    @Size(max=256)
+    @Size(max = 256)
     @JsonProperty("nextState")
     private String nextState;
 
-    @Size(max=1024)
+    @Size(max = 1024)
     @JsonProperty("roles")
     @Valid
     private List<String> roles;

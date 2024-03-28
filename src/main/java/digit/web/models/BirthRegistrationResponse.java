@@ -2,11 +2,13 @@ package digit.web.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import org.egov.common.contract.response.ResponseInfo;
 import org.springframework.validation.annotation.Validated;
+
 import javax.validation.Valid;
 
 import lombok.AllArgsConstructor;
@@ -24,23 +26,23 @@ import lombok.Builder;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class BirthRegistrationResponse   {
-        @JsonProperty("ResponseInfo")
+public class BirthRegistrationResponse {
+    @JsonProperty("ResponseInfo")
 
-          @Valid
-                private ResponseInfo responseInfo = null;
+    @Valid
+    private ResponseInfo responseInfo = null;
 
-        @JsonProperty("BirthRegistrationApplications")
-          @Valid
-                private List<BirthRegistrationApplication> birthRegistrationApplications = null;
+    @JsonProperty("BirthRegistrationApplications")
+    @Valid
+    private List<BirthRegistrationApplication> birthRegistrationApplications = null;
 
 
-        public BirthRegistrationResponse addBirthRegistrationApplicationsItem(BirthRegistrationApplication birthRegistrationApplicationsItem) {
-            if (this.birthRegistrationApplications == null) {
+    public BirthRegistrationResponse addBirthRegistrationApplicationsItem(BirthRegistrationApplication birthRegistrationApplicationsItem) {
+        if (this.birthRegistrationApplications == null) {
             this.birthRegistrationApplications = new ArrayList<>();
-            }
+        }
         this.birthRegistrationApplications.add(birthRegistrationApplicationsItem);
         return this;
-        }
+    }
 
 }

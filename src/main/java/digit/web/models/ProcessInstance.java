@@ -20,7 +20,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@EqualsAndHashCode(of = { "id" })
+@EqualsAndHashCode(of = {"id"})
 @ToString
 public class ProcessInstance {
 

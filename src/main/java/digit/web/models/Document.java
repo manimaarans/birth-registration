@@ -1,12 +1,15 @@
 package digit.web.models;
 
 import java.util.Objects;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.validation.annotation.Validated;
+
 import javax.validation.Valid;
 import javax.validation.constraints.*;
+
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.Data;
@@ -22,26 +25,28 @@ import lombok.Builder;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Document   {
-        @JsonProperty("id")
+public class Document {
+    @JsonProperty("id")
 
-        @Size(max=64)         private String id = null;
+    @Size(max = 64)
+    private String id = null;
 
-        @JsonProperty("documentType")
+    @JsonProperty("documentType")
 
-                private String documentType = null;
+    private String documentType = null;
 
-        @JsonProperty("fileStore")
+    @JsonProperty("fileStore")
 
-                private String fileStore = null;
+    private String fileStore = null;
 
-        @JsonProperty("documentUid")
+    @JsonProperty("documentUid")
 
-        @Size(max=64)         private String documentUid = null;
+    @Size(max = 64)
+    private String documentUid = null;
 
-        @JsonProperty("additionalDetails")
+    @JsonProperty("additionalDetails")
 
-                private Object additionalDetails = null;
+    private Object additionalDetails = null;
 
 
 }

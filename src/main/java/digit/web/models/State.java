@@ -20,29 +20,29 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @ToString
-@EqualsAndHashCode(of = {"tenantId","businessServiceId","state"})
+@EqualsAndHashCode(of = {"tenantId", "businessServiceId", "state"})
 public class State {
 
-    @Size(max=256)
+    @Size(max = 256)
     @JsonProperty("uuid")
     private String uuid;
 
-    @Size(max=256)
+    @Size(max = 256)
     @JsonProperty("tenantId")
     private String tenantId;
 
-    @Size(max=256)
+    @Size(max = 256)
     @JsonProperty("businessServiceId")
     private String businessServiceId;
 
     @JsonProperty("sla")
     private Long sla;
 
-    @Size(max=256)
+    @Size(max = 256)
     @JsonProperty("state")
     private String state;
 
-    @Size(max=256)
+    @Size(max = 256)
     @JsonProperty("applicationStatus")
     private String applicationStatus;
 

@@ -23,31 +23,31 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @ToString
-@EqualsAndHashCode(of = {"tenantId","businessService"})
+@EqualsAndHashCode(of = {"tenantId", "businessService"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class BusinessService   {
+public class BusinessService {
 
-    @Size(max=256)
+    @Size(max = 256)
     @JsonProperty("tenantId")
     private String tenantId = null;
 
-    @Size(max=256)
+    @Size(max = 256)
     @JsonProperty("uuid")
     private String uuid = null;
 
-    @Size(max=256)
+    @Size(max = 256)
     @JsonProperty("businessService")
     private String businessService = null;
 
-    @Size(max=256)
+    @Size(max = 256)
     @JsonProperty("business")
     private String business = null;
 
-    @Size(max=1024)
+    @Size(max = 1024)
     @JsonProperty("getUri")
     private String getUri = null;
 
-    @Size(max=1024)
+    @Size(max = 1024)
     @JsonProperty("postUri")
     private String postUri = null;
 
@@ -63,7 +63,6 @@ public class BusinessService   {
     private AuditDetails auditDetails = null;
 
 
-
     public BusinessService addStatesItem(State statesItem) {
         if (this.states == null) {
             this.states = new ArrayList<>();
@@ -75,14 +74,15 @@ public class BusinessService   {
 
     /**
      * Returns the currentState with the given uuid if not present returns null
+     *
      * @param uuid the uuid of the currentState to be returned
      * @return
      */
     public State getStateFromUuid(String uuid) {
         State state = null;
-        if(this.states!=null){
-            for(State s : this.states){
-                if(s.getUuid().equalsIgnoreCase(uuid)){
+        if (this.states != null) {
+            for (State s : this.states) {
+                if (s.getUuid().equalsIgnoreCase(uuid)) {
                     state = s;
                     break;
                 }
@@ -90,7 +90,6 @@ public class BusinessService   {
         }
         return state;
     }
-
 
 
 }
