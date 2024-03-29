@@ -35,8 +35,6 @@ public class BirthApplicationEnrichment {
             // Enrich UUID
             application.setId(UUID.randomUUID().toString());
 
-//            application.getFather().setId(application.getId());
-//            application.getMother().setId(application.getId());
 
             // Enrich registration Id
             application.getAddress().setApplicationNumber(application.getId());
@@ -73,13 +71,16 @@ public class BirthApplicationEnrichment {
                 .id(fatherUser.getUuid())
                 .name(fatherUser.getName())
                 .type(fatherUser.getType())
-                .roles(fatherUser.getRoles()).build();
+                .roles(fatherUser.getRoles())
+                .mobileNumber(fatherUser.getMobileNumber())
+                .emailId(fatherUser.getEmailId())
+                .tenantId(fatherUser.getTenantId()).build();
         application.setFather(fatherApplicant);
     }
 
     public void enrichMotherApplicantOnSearch(BirthRegistrationApplication application) {
         // enrich mother applicant details from userservice
-        UserDetailResponse motherUserResponse = userService.searchUser(userUtils.getStateLevelTenant(application.getTenantId()),application.getFather().getId(),null);
+        UserDetailResponse motherUserResponse = userService.searchUser(userUtils.getStateLevelTenant(application.getTenantId()),application.getMother().getId(),null);
         User motherUser = motherUserResponse.getUser().get(0);
         log.info(motherUser.toString());
         Applicant motherApplicant = Applicant.builder().aadhaarNumber(motherUser.getAadhaarNumber())
@@ -94,7 +95,10 @@ public class BirthApplicationEnrichment {
                 .id(motherUser.getUuid())
                 .name(motherUser.getName())
                 .type(motherUser.getType())
-                .roles(motherUser.getRoles()).build();
+                .roles(motherUser.getRoles())
+                .mobileNumber(motherUser.getMobileNumber())
+                .emailId(motherUser.getEmailId())
+                .tenantId(motherUser.getTenantId()).build();
         application.setMother(motherApplicant);
     }
 }
